@@ -1,0 +1,246 @@
+// PROJECT-SPECIFIC global css should go here
+@import 'reset';
+@import 'fonts';
+@import 'config';
+
+// global form styles imported separately
+@import 'forms';
+
+:root {
+  // LAYOUT
+  --container-gutter: clamp(#{$container-gutter-min}, 5vw, #{$container-gutter});
+  --gutter: #{$gutter};
+  --scrollbar-width: 0px;
+
+  // ANIMATION / TRANSITION
+  --default-ease: #{$default-ease};
+  --transition-duration: #{$transition-duration};
+
+  --link-color: $white;
+  --link-underline-color: $white;
+
+  // COLORS
+  @if variable-exists(color-backdrop) {
+    --color-backdrop: #{$color-backdrop};
+  }
+
+  --color-background: #{$color-background};
+  --color-border: #{$color-border};
+  --color-font: #{$color-font};
+  --color-link: #{$color-link};
+  --color-primary: #{$color-primary};
+
+  @if variable-exists(color-secondary) {
+    --color-secondary: #{$color-secondary};
+  }
+
+  @if variable-exists(color-font-contrast) {
+    --color-font-contrast: #{$color-font-contrast};
+  }
+
+  @if variable-exists(color-placeholder) {
+    --color-placeholder: #{$color-placeholder};
+  }
+
+  @if variable-exists(header-height-mobile) {
+    --header-height: #{$header-height-mobile};
+  }
+
+  @media (min-width: $min-desktop) {
+    @if variable-exists(header-height) {
+      --header-height: #{$header-height};
+    }
+  }
+
+  // DARK MODE
+  @media (prefers-color-scheme: dark) {
+    @if variable-exists(color-background-dark-mode) {
+      --color-background: #{$color-background-dark-mode};
+    }
+
+    @if variable-exists(color-font-dark-mode) {
+      --color-font: #{$color-font-dark-mode};
+    }
+
+    @if variable-exists(color-link-dark-mode) {
+      --color-link: #{$color-link-dark-mode};
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    --transition-duration: 1ms;
+  }
+}
+
+html {
+  @include responsive-font($font-size-min, $font-size);
+  @mixin html-overflow-hidden {
+    overflow-y: hidden;
+
+    body {
+      padding-right: var(--scrollbar-width);
+
+      touch-action: none;
+    }
+  }
+
+  font-family: $font-family;
+  line-height: $line-height;
+  font-size: $font-size;
+
+  color: var(--color-font, $color-font);
+  background: var(--color-background, $color-background);
+
+  &.scroll-disabled {
+    // if nav is open
+    @include html-overflow-hidden;
+  }
+
+  &.nav-open {
+    @media (max-width: $max-desktop) {
+      @include html-overflow-hidden;
+    }
+  }
+}
+
+body {
+  color: var(--color-font);
+}
+
+hr {
+  border-color: var(--color-border, $color-border);
+}
+
+a {
+  text-decoration: none;
+
+  @media (pointer: fine) {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.limit-container {
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.container {
+  margin: 0 auto;
+
+  padding: 0 30px;
+
+  max-width: 1480px;
+
+  width: 100%;
+}
+
+.small-container {
+  margin: 0 auto;
+
+  padding: 0 30px;
+
+  max-width: 1210px;
+
+  width: 100%;
+}
+
+.bg-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: none;
+  width: 100%;
+  height: 101%;
+  background-color: $dark;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+}
+
+.blue-section {
+  background-color: $blue;
+  color: $white;
+}
+
+.dark-section {
+  background-color: $dark;
+  color: $white;
+}
+
+.light {
+  width: 100%;
+  background: $bg-color;
+}
+
+.poster {
+  width: 100%;
+}
+
+.newsWrapper {
+  padding-top: 192px;
+  padding-bottom: 174px;
+}
+
+.slick-track {
+  display: flex;
+  flex: 1;
+}
+.slick-list {
+  overflow: hidden;
+  position: relative;
+}
+.slick-slide {
+  box-sizing: border-box;
+  position: relative;
+}
+
+.slick-slider {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+}
+
+.news-content-wrapper {
+  margin-top: 140px;
+  padding-bottom: 237px;
+}
+
+.pt-142 {
+  padding-top: 142px;
+}
+
+.p-0 {
+  padding: 0;
+}
+
+.pt-40 {
+  padding-top: 40px;
+}
+
+.ptb-80 {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.link--effect::before {
+  transform-origin: 100% 50%;
+  transform: scale3d(0, 1, 1);
+  transition: transform 0.3s;
+}
+
+.link--effect:hover::before {
+  transform-origin: 0% 50%;
+  transform: scale3d(1, 1, 1);
+}

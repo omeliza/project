@@ -1,0 +1,111 @@
+@import 'styles/config';
+
+.title {
+  display: flex;
+  justify-content: space-between;
+
+  > h2 {
+    align-self: end;
+
+    margin-bottom: 26px;
+
+    @media (max-width: $min-tablet) {
+      align-self: flex-start;
+    }
+  }
+
+  > a {
+    margin-bottom: 40px;
+
+    background: rgba(16, 22, 25, 0.1);
+  }
+
+  @media (max-width: $min-tablet) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.news {
+  &__title {
+    @include responsive-font($h3-size-min, $h3-size);
+  }
+
+  &__p {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+  }
+
+  &__article {
+    display: flex;
+    align-items: center;
+
+    position: relative;
+
+    padding-top: 32px;
+    padding-bottom: 45px;
+
+    border-top: 1px solid rgba(88, 88, 88, 0.2);
+
+    cursor: pointer;
+
+    @media (max-width: 1320px) {
+      flex-direction: column;
+    }
+
+    &::after {
+      content: '';
+
+      position: absolute;
+      top: 55px;
+      right: 0;
+
+      width: 50px;
+      height: 28px;
+
+      background-image: url('../../assets/arrow.svg');
+      background-repeat: no-repeat;
+
+      @media (max-width: 1320px) {
+        content: none;
+      }
+    }
+  }
+  &__description {
+    display: flex;
+    flex-direction: column;
+
+    margin-left: 30px;
+
+    width: 590px;
+    height: 20.36vw;
+    max-height: 342px;
+
+    @media (max-width: 1320px) {
+      margin-left: 0;
+
+      height: auto;
+    }
+
+    @media (max-width: 650px) {
+      width: auto;
+    }
+    @media (max-width: 500px) {
+      .h4 {
+        word-break: break-all;
+      }
+    }
+    > h4:first-child {
+      flex: 1;
+
+      @media (max-width: 1320px) {
+        padding: 16px 0;
+      }
+    }
+
+    > p:last-child {
+      color: $blue;
+    }
+  }
+}

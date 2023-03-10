@@ -1,0 +1,10 @@
+@import 'styles/config';
+
+.slider {
+  height: 700px;
+
+  &__title {
+    padding-top: 112px;
+    margin-bottom: 64px;
+  }
+}

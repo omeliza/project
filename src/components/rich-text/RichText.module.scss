@@ -1,0 +1,216 @@
+/* stylelint-disable no-descending-specificity */
+@import 'styles/config';
+
+.richText {
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  // use rem here for consistent spacing rules?
+  $block-margin: 2rem;
+
+  // cant loop this dynamically (or at least not in a readable way)
+  h1 {
+    @include h1;
+  }
+
+  h2 {
+    @include h2;
+  }
+
+  h3 {
+    @include h3;
+  }
+
+  h4 {
+    @include h4;
+  }
+
+  h5 {
+    @include h5;
+  }
+
+  h6 {
+    @include h6;
+  }
+
+  // loop through block elements and add some generic / adjacent selector styles
+  @each $el in $block-article-elements {
+    #{$el}:empty {
+      display: none;
+    }
+
+    #{$el} {
+      margin-top: $block-margin;
+      margin-bottom: $block-margin;
+    }
+
+    h4 + #{$el} {
+      margin-top: 1rem;
+    }
+
+    h5 + #{$el},
+    h6 + #{$el} {
+      margin-top: 0;
+    }
+
+    // heading gets more spacing above when adjacent to a block el
+    @each $heading in $heading-types {
+      #{$heading} b,
+      #{$heading} strong {
+        font-weight: inherit;
+      }
+
+      @if index('h1' 'h2' 'h3', $heading) {
+        #{$el} + #{$heading} {
+          margin-top: $block-margin * 2;
+        }
+      } @else {
+        #{$el} + #{$heading} {
+          margin-top: $block-margin;
+        }
+      }
+    }
+  }
+
+  @each $heading in $heading-types {
+    @if index('h1' 'h2' 'h3', $heading) {
+      #{$heading} {
+        margin-bottom: $block-margin;
+      }
+    }
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  h5 + &,
+  h6 + & {
+    margin-top: 0;
+  }
+
+  hr {
+    margin-top: $block-margin * 2;
+    margin-bottom: $block-margin * 2;
+  }
+
+  ul,
+  ol {
+    // padding-bottom: 20px;
+    padding-left: 1.6ch;
+
+    li:not(:last-child) {
+      margin-bottom: 0.5em;
+    }
+
+    > li > ul,
+    > li > ol {
+      margin: 0.25em 0;
+      padding-left: 1em;
+    }
+  }
+
+  ul {
+    list-style: square outside;
+
+    li {
+      display: list-item;
+
+      &::marker {
+        color: var(--color-primary);
+      }
+
+      li {
+        list-style-type: circle;
+      }
+    }
+  }
+
+  ol {
+    list-style: decimal outside;
+
+    /*
+    li::marker {
+      // marker styles?
+    }
+    */
+
+    ol {
+      li {
+        list-style: lower-alpha inside;
+
+        &::marker {
+          color: inherit;
+        }
+
+        &::before {
+          display: none;
+        }
+      }
+    }
+  }
+
+  dt {
+    font-weight: 700;
+  }
+
+  dd {
+    margin-bottom: $block-margin;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    color: var(--color-link, currentColor);
+  }
+
+  b,
+  strong {
+    font-weight: 700;
+  }
+
+  em,
+  i {
+    font-style: italic;
+  }
+
+  pre,
+  code,
+  kbd,
+  samp {
+    border-radius: 3px;
+    border: 1px solid var(--color-border);
+
+    font-family: monospace;
+  }
+
+  code {
+    padding: 0.1em 0.3em;
+  }
+
+  pre {
+    padding: var(--gutter);
+
+    overflow: auto;
+
+    code {
+      padding: 0;
+
+      border: 0;
+
+      background: none;
+    }
+  }
+
+  &__imageWrap {
+    margin-top: $block-margin;
+    margin-bottom: $block-margin;
+  }
+}

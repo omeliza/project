@@ -1,0 +1,44 @@
+name: CI-lint
+on:
+  # So we don't trigger two runs when pushing to a PR
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        # This caches the yarn cache, not node_modules, need to run yarn install
+        # https://github.com/actions/cache/blob/main/examples.md#node---yarn
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install dependencies
+        # Always run this, if cached or not
+        run: yarn install
+
+      - name: Lint
+        # Note we *fail on any warning* by passing --max-warnings=0 to eslint in package.json
+        run: yarn lint
+
+      - name: Test
+        # Run this even if linting failed
+        if: always()
+        run: yarn test

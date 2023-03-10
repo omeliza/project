@@ -1,0 +1,23 @@
+@import 'styles/config';
+
+.slide {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 38px;
+
+  padding: 0 24px;
+  margin-right: 30px;
+
+  width: 342px;
+  height: 307px;
+
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.06);
+
+  @media (max-width: 480px) {
+    width: 280px;
+  }
+}

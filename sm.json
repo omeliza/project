@@ -1,0 +1,7 @@
+{
+  "apiEndpoint": "https://x.prismic.io/api/v2",
+  "_latest": "0.5.2",
+  "libraries": ["@/src/prismic/slices"],
+  "framework": "next",
+  "generateTypes": false
+}

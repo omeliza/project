@@ -1,0 +1,50 @@
+@import 'styles/config';
+
+.mixinGrid {
+  @include grid($align: stretch, $grid-row-gap: var(--gutter));
+
+  &__item {
+    @include grid-item;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    min-height: 100px;
+
+    color: var(--color-font-contrast);
+    background-color: var(--color-primary);
+
+    &:nth-child(1) {
+      @media (min-width: $min-desktop) {
+        @include grid-item(10, 2);
+      }
+    }
+
+    &:nth-child(2) {
+      @include grid-item(6, 6);
+
+      @media (min-width: $min-desktop) {
+        @include grid-item(8, 1);
+      }
+
+      @media (min-width: $min-wide) {
+        @include grid-item(10);
+      }
+    }
+
+    &:nth-child(3) {
+      @include grid-item(8, 0);
+
+      @media (min-width: $min-desktop) {
+        @include grid-item(8, 4);
+      }
+
+      @media (min-width: $min-wide) {
+        @include grid-item(10, 1);
+      }
+    }
+  }
+}

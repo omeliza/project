@@ -1,0 +1,6 @@
+graphql.schema.json
+src/prismic/masks/*.json
+src/prismic/slices/**/*.js
+src/prismic-types.tsx
+.stylelintrc.json
+redirects.js

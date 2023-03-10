@@ -1,0 +1,53 @@
+@import 'styles/config';
+
+.nextArticle {
+  display: flex;
+  gap: 30px;
+
+  padding-top: 250px;
+  padding-right: 30px;
+
+  @media (max-width: $min-desktop) {
+    flex-direction: column-reverse;
+  }
+
+  @media (max-width: $min-mobile) {
+    padding-right: 0;
+  }
+
+  &__descrip {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 44px;
+
+    max-width: 580px;
+
+    @media (max-width: $min-desktop) {
+      padding: 0px 30px;
+
+      width: 100%;
+      max-width: unset;
+    }
+  }
+
+  &__title {
+    color: $dark;
+  }
+
+  &__text {
+    @include responsive-font(22px, 18px);
+    line-height: 1.5;
+  }
+
+  &__img {
+    > img {
+      max-width: 708px;
+
+      @media (max-width: $min-desktop) {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+  }
+}

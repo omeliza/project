@@ -1,0 +1,41 @@
+@import 'styles/config';
+
+.section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+
+  padding-top: 223px;
+  padding-bottom: 148px;
+
+  @media (max-width: $min-tablet) {
+    grid-template-columns: 1fr;
+  }
+
+  &__textWrapper {
+    display: flex;
+    flex-direction: column;
+
+    padding-right: 120px;
+
+    @media (max-width: $min-desktop) {
+      padding-right: 60px;
+    }
+
+    @media (max-width: $min-mobile) {
+      padding-right: 30px;
+    }
+  }
+
+  &__button {
+    background-color: rgba($white, 0.06);
+  }
+
+  &__text {
+
+    @include responsive-font(22px, 18px);
+    margin-bottom: 56px;
+
+    line-height: 1.5;
+  }
+}

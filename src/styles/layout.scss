@@ -1,0 +1,87 @@
+// Section spacing util, used in @section mixin but doesnt need to be used exclusively there
+@function section-spacing($min: $section-padding-mobile, $max: $section-padding) {
+  $min-value: strip-unit($min);
+  $max-value: strip-unit($max);
+  $multiplier: math.div(($max-value), strip-unit($page-width));
+  $clamp: min(#{$multiplier * 150}vh, #{$multiplier * 100}vw);
+
+  @return clamp(#{$min-value * 1px}, #{$clamp}, #{$max-value * 1px});
+}
+
+// <Section>: full-width; top & bottom padding for a section component. usually direct parent of <Container />
+@mixin section(
+  $padding-top: $section-padding,
+  $padding-bottom: $section-padding,
+  $padding-top-mobile: $section-padding-mobile,
+  $padding-bottom-mobile: $section-padding-mobile
+) {
+  // Set up unitless values
+  $top-mobile: strip-unit($padding-top-mobile);
+  $bottom-mobile: strip-unit($padding-bottom-mobile);
+  $top: strip-unit($padding-top);
+  $bottom: strip-unit($padding-bottom);
+
+  // mobile only padding
+  @if ($top-mobile > 0 and $top == 0) {
+    @media (max-width: $max-tablet) {
+      padding-top: $top-mobile * 1px;
+    }
+  }
+
+  @if ($bottom-mobile > 0 and $bottom == 0) {
+    @media (max-width: $max-tablet) {
+      padding-bottom: $bottom-mobile * 1px;
+    }
+  }
+
+  @if ($top > 0) {
+    $padding: section-spacing($top-mobile, $top);
+
+    @if ($top-mobile == 0) {
+      @media (min-width: $min-tablet) {
+        padding-top: $padding;
+      }
+    } @else {
+      padding-top: $padding;
+    }
+    @if ($bottom > 0) {
+      $padding: section-spacing($bottom-mobile, $bottom);
+
+      @if ($bottom-mobile == 0) {
+        @media (min-width: $min-tablet) {
+          padding-bottom: $padding;
+        }
+      } @else {
+        padding-bottom: $padding;
+      }
+    }
+  }
+
+  @supports not (padding: clamp(1px, 1vmin, 2px)) {
+    padding-top: $top-mobile * 1px;
+    padding-bottom: $bottom-mobile * 1px;
+
+    @media (min-width: $min-desktop) {
+      padding-top: $top * 1px;
+      padding-bottom: $bottom * 1px;
+    }
+  }
+
+  &:empty {
+    display: none;
+  }
+}
+
+@mixin container($fluid: false) {
+  $width: calc(100% - (var(--container-gutter) * 2));
+
+  flex: none;
+
+  margin: 0 auto;
+
+  @if ($fluid == true) {
+    width: $width;
+  } @else {
+    width: min(#{$width}, #{$page-width});
+  }
+}
